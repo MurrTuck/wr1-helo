@@ -3,10 +3,10 @@ import Nav from '../Nav/Nav'
 
 
 class Post extends Component {
-    constructor() {
-        super()
+    // constructor() {
+    //     super()
 
-    }
+    // }
 
 
     render() {

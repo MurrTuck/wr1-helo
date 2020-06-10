@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 
 
 class Nav extends Component {
-    constructor() {
-        super()
+    // constructor() {
+    //     super()
 
-    }
+    // }
 
 
     render() {

@@ -16,7 +16,7 @@ module.exports = {
 
         const newUser = await db.register_user([username, hash])
         delete newUser[0].hash
-        // req.session.user = newUser[0]
-        // return res.status(200).send(req.session.user)
+        req.session.user = newUser[0]
+        return res.status(200).send(req.session.user)
     }
 }

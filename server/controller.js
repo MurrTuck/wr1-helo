@@ -18,6 +18,8 @@ module.exports = {
 }
 
 
+//Update Authentication
+
 //Ended with Axios  - 
 // Write a method in Auth that sends an axios request to the endpoint you just wrote.
 // The axios request should take the username and password off of state and put them in the body of the request.

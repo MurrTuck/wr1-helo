@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt")
 
 module.exports = {
     register: async (req, res) => {
+        console.log("POST REGISTER endpoint hit")
         const { username, password } = req.body
         const db = req.app.get("db")
 
@@ -19,10 +20,32 @@ module.exports = {
         req.session.user = newUser[0]
         return res.status(200).send(req.session.user)
     },
-    login: (req, res) => {
+
+    login: async (req, res) => {
+        console.log("POST LOGIN endpoint hit")
+        const { username, password } = req.body
+        const db = req.app.get("db")
+
+        const user = await db.get_user(username)
+
+        if (!user[0]) {
+            return res.status(404).send('User does not exist')
+        }
+
+        const authenticated = bcrypt.compareSync(password, user[0].hash)
+        if (authenticated) {
+            req.session.user = {
+                userId: user[0].user_id
+            }
+            res.status(200).send(req.session.user)
+        } else {
+            return res.status(403).send('Email or password is incorrect')
+        }
 
     },
-    logout: (req, res) => {
 
+    logout: (req, res) => {
+        req.session.destroy()
+        res.sendStatus(200)
     }
 }

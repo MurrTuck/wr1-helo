@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 
 
@@ -11,6 +12,7 @@ class Nav extends Component {
 
 
     render() {
+        // console.log('Redux Props', this.props)
         return (
             <div>
                 Nav
@@ -31,4 +33,11 @@ class Nav extends Component {
     }
 }
 
-export default Nav
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        profile_pic: state.profilePic
+    }
+}
+
+export default connect(mapStateToProps)(Nav)

@@ -16,6 +16,7 @@ class Auth extends Component {
     }
 
     changeHandler = (e) => {
+        // console.log('ChangeHandler Hit')
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -35,7 +36,26 @@ class Auth extends Component {
                 this.props.history.push('/dashboard')
             })
             .catch(err => {
-                console.log(err)
+                console.log('Registering Error on Auth.js')
+                alert(err)
+            })
+    }
+
+    loginUser = () => {
+        console.log('Login Button Hit')
+        const { username, password } = this.state
+        axios
+            .post('/auth/login', { username, password })
+            .then(res => {
+                console.log("User has been logged in", res.data)
+                this.setState({
+                    username: res.data.username,
+                    password: ''
+                })
+                this.props.history.push('/dashboard')
+            })
+            .catch(err => {
+                console.log('Could not login - Error on Login Auth.js')
                 alert(err)
             })
     }
@@ -44,29 +64,28 @@ class Auth extends Component {
 
     render() {
         const { username, password } = this.state
+        // console.log('This is State', this.state)
         return (
             <div>
                 <div>
                     Auth Component
                 </div>
-                <form>
-                    <input
-                        type='text'
-                        name='username'
-                        placeholder="username"
-                        value={username}
-                        onChange={e => this.changeHandler(e)}>
-                    </input>
-                    <input
-                        type='password'
-                        name='password'
-                        placeholder="password"
-                        value={password}
-                        onChange={e => this.changeHandler(e)}>
-                    </input>
-                    <button>Login</button>
-                    <button onClick={this.registerUser}>Register</button>
-                </form>
+                <input
+                    type='text'
+                    name='username'
+                    placeholder="username"
+                    value={username}
+                    onChange={e => this.changeHandler(e)}>
+                </input>
+                <input
+                    type='password'
+                    name='password'
+                    placeholder="password"
+                    value={password}
+                    onChange={e => this.changeHandler(e)}>
+                </input>
+                <button onClick={this.loginUser}>Login</button>
+                <button onClick={this.registerUser}>Register</button>
             </div>
         )
 

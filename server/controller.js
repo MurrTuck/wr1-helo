@@ -26,21 +26,33 @@ module.exports = {
         const { username, password } = req.body
         const db = req.app.get("db")
 
-        const user = await db.get_user(username)
+        const existingUser = await db.get_user(username)
 
-        if (!user[0]) {
+        if (!existingUser[0]) {
             return res.status(404).send('User does not exist')
         }
 
-        const authenticated = bcrypt.compareSync(password, user[0].hash)
-        if (authenticated) {
-            req.session.user = {
-                userId: user[0].user_id
-            }
-            res.status(200).send(req.session.user)
-        } else {
+        const authenticated = bcrypt.compareSync(password, existingUser[0].hash)
+        if (!authenticated) {
             return res.status(403).send('Email or password is incorrect')
         }
+
+
+
+        // if (authenticated) {
+        //     req.session.user = {
+        //         userId: existingUser[0].user_id
+        //     }
+        //     res.status(200).send(req.session.user)
+        // } else {
+        //     return res.status(403).send('Email or password is incorrect')
+        // }
+
+        delete existingUser[0].hash
+
+        req.session.user = existingUser[0]
+
+        res.status(200).send(req.session)
 
     },
 

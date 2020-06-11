@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+
 
 
 
@@ -13,15 +15,58 @@ class Auth extends Component {
 
     }
 
+    changeHandler = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    registerUser = () => {
+        const { username, password } = this.state
+
+        axios
+            .post('/auth/register', { username, password })
+            .then(res => {
+                console.log("User has been registered", res.data)
+                this.setState({
+                    username: res.data.username,
+                    password: ''
+                })
+                this.props.history.push('/dashboard')
+            })
+            .catch(err => {
+                console.log(err)
+                alert(err)
+            })
+    }
+
+
 
     render() {
+        const { username, password } = this.state
         return (
             <div>
-                Auth
-                <input placeholder="username email..."></input>
-                <input placeholder="password"></input>
-                <button>Login</button>
-                <button>Register</button>
+                <div>
+                    Auth Component
+                </div>
+                <form>
+                    <input
+                        type='text'
+                        name='username'
+                        placeholder="username"
+                        value={username}
+                        onChange={e => this.changeHandler(e)}>
+                    </input>
+                    <input
+                        type='password'
+                        name='password'
+                        placeholder="password"
+                        value={password}
+                        onChange={e => this.changeHandler(e)}>
+                    </input>
+                    <button>Login</button>
+                    <button onClick={this.registerUser}>Register</button>
+                </form>
             </div>
         )
 

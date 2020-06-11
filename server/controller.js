@@ -18,5 +18,11 @@ module.exports = {
         delete newUser[0].hash
         req.session.user = newUser[0]
         return res.status(200).send(req.session.user)
+    },
+    login: (req, res) => {
+
+    },
+    logout: (req, res) => {
+
     }
 }

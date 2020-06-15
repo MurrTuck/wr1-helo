@@ -98,6 +98,7 @@ class Auth extends Component {
     }
 }
 
+//Fixing Redux
 const mapStateToProps = state => state
 
 export default connect(mapStateToProps, { updateUser })(Auth)

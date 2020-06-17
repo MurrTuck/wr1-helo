@@ -5,6 +5,7 @@ CREATE TABLE users(
   first_name VARCHAR(50),
   last_name VARCHAR(50),
   email VARCHAR(150),
+  username VARCHAR(50)
   hash TEXT
 )
 
@@ -18,7 +19,7 @@ CREATE TABLE posts(
 
 
 ALTER TABLE users
-ADD COLUMN password TEXT;
+ADD COLUMN username TEXT;
 
 ALTER TABLE users
 ALTER password
